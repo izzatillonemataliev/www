@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
+// import { auth } from "../firebase/firebaseConfig";
 import { useGlobalContext } from "./useGlobalContext";
 
 function useLogin() {

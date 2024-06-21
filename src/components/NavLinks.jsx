@@ -5,7 +5,7 @@ const links = [
   { id: 2, text: "About", link: "/about" },
   { id: 3, text: "Contact", link: "/contact" },
 ];
-function NavLinks() {
+function NavLinks({ link }) {
   return (
     <>
       {links.map((link) => {

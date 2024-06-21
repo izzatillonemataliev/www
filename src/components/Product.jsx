@@ -1,12 +1,21 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../context/globalContext";
+import { MdAddShoppingCart } from "react-icons/md";
 
 function Product() {
+  const { addProduct } = useContext(GlobalContext);
   const { id } = useParams();
   const { data, setData, error } = useFetch(
-    `https://dummyjson.com/product/${id}`
+    "https://dummyjson.com/product/" + id
   );
-  console.log(data);
+  const [amount, setAmount] = useState(0);
+  //
+  const handleAdd = () => {
+    addProduct({ ...data, amount });
+  };
+
   return (
     <>
       {data && (
@@ -26,11 +35,27 @@ function Product() {
               <p>Tags: {data.tags}</p>
               <p>Brand: {data.brand}</p>
               <div className="flex items-center gap-4 mb-10">
-                <button className="btn btn-secondary">-</button>
-                <div>0</div>
-                <button className="btn btn-secondary">+</button>
+                <button
+                  onClick={() => setAmount(amount + 1)}
+                  className="btn btn-secondary"
+                >
+                  +
+                </button>
+                <div>{amount}</div>
+                <button
+                  onClick={() => setAmount(amount - 1)}
+                  className="btn btn-secondary"
+                >
+                  -
+                </button>
+                <button onClick={handleAdd}>
+                  <MdAddShoppingCart />
+                </button>
               </div>
-            </div>{" "}
+              <Link to="/korzinka">
+                <button className="btn">Move to Bucket</button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
