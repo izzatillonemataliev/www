@@ -4,31 +4,38 @@ import { IoSunnySharp, IoMoonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiLogoRedux } from "react-icons/bi";
+import { signOut } from "firebase/auth"; // Firebase'dan import qilish kerak
+import { useGlobalContext } from "../hooks/useGlobalContext";
+
+
 function themeFromLocalStorage() {
   return localStorage.getItem("theme") || "winter";
 }
-import { useGlobalContext } from "../hooks/useGlobalContext";
 
-function header() {
+function Header() {
   const { total, user } = useGlobalContext();
   const [theme, setTheme] = useState(themeFromLocalStorage());
+
   const handleTheme = () => {
-    const newTheme = theme == "winter" ? "dracula" : "winter";
+    const newTheme = theme === "winter" ? "dracula" : "winter";
     setTheme(newTheme);
   };
+
   const logout = () => {
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
+        // Chiqish muvaffaqiyatli amalga oshirildi.
       })
       .catch((error) => {
-        // An error happened.
+        // Xato yuz berdi.
       });
   };
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
   return (
     <div className="bg-base-200 mb-10">
       <div className="navbar site-container">
@@ -54,29 +61,25 @@ function header() {
           </div>
 
           <label className="swap swap-rotate">
-            {/* this hidden checkbox controls the state */}
             <input
               onClick={handleTheme}
               type="checkbox"
-              checked={theme == "dracula"}
+              checked={theme === "dracula"}
               readOnly
             />
-
-            {/* sun icon */}
             <IoSunnySharp className="swap-on fill-current w-10 h-10" />
-            {/* moon icon */}
             <IoMoonSharp className="swap-off fill-current w-10 h-10" />
           </label>
-          <div className="flex  gap-4 items-center">
-            <p className="">{user.displayName}</p>
+          <div className="flex gap-4 items-center">
+            <p>{user.displayName}</p>
             <div className="avatar">
               <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={user.photoURL} />
+                <img src={user.photoURL} alt="Foydalanuvchi rasmi" />
               </div>
             </div>
           </div>
           <button onClick={logout} className="btn btn-primary">
-            Log out
+            Chiqish
           </button>
         </div>
       </div>
@@ -84,4 +87,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;
