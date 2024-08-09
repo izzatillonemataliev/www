@@ -19,7 +19,7 @@ function Login() {
       <Form method="post" className="w-96">
         <h1 className="text-3xl font-bold text-center mb-4">Kirish</h1>
         <FormInput type="email" labelText="Email:" name="email" />
-        <div className="relative">
+        <div className="relative text-center">
           <FormInput
             type={showPassword ? "text" : "password"} // Parol ko'rinishi boshqariladi
             labelText="Parol:"
